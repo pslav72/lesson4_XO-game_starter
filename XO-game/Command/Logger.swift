@@ -1,5 +1,5 @@
 //
-//  GameState.swift
+//  Logger.swift
 //  XO-game
 //
 //  Created by Вячеслав Поляков on 02.10.2021.
@@ -8,11 +8,9 @@
 
 import Foundation
 
-public protocol GameState {
+final class Logger {
     
-    var isCompleted: Bool { get }
-    
-    func begin()
-    
-    func addMark(at position: GameboardPosition)
+    func writeMessageToLog(_ message: String) {
+        print(message)
+    }
 }
