@@ -90,16 +90,20 @@ class GameViewController: UIViewController {
         }
         
         if self.player == .pc {
-            print("player PC")
-            
-            while !self.currentState.isCompleted {
-                let setRandomPosition = GameboardPosition(column: Int.random(in: 0..<GameboardSize.columns), row: Int.random(in: 0..<GameboardSize.rows))
-                print("position \(setRandomPosition) \(self.gameMode) \(self.player)")
-                self.currentState.addMark(at: setRandomPosition)
-            }
-            self.counterMove += 1
-            self.goToNextState()
+            turnPlayerPC()
         }
+    }
+    
+    private func turnPlayerPC() {
+        print("player PC")
+        
+        while !self.currentState.isCompleted {
+            let setRandomPosition = GameboardPosition(column: Int.random(in: 0..<GameboardSize.columns), row: Int.random(in: 0..<GameboardSize.rows))
+            print("position \(setRandomPosition) \(self.gameMode) \(self.player)")
+            self.currentState.addMark(at: setRandomPosition)
+        }
+        self.counterMove += 1
+        self.goToNextState()
     }
     
 
