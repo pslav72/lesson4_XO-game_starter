@@ -19,6 +19,9 @@ class GameViewController: UIViewController {
     private let gameboard = Gameboard()
     private var counterMove: Int = 0
     
+    var gameMode: GameMode = .twoPlayer
+    private var player: Player = .first
+    
     private var currentState: GameState! {
         didSet {
             self.currentState.begin()
@@ -29,22 +32,16 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        secondPlayerTurnLabel.text = gameMode == .twoPlayer ? "2nd player" : "PC player"
         self.goToFirstState()
-
-        gameboardView.onSelectPosition = { [weak self] position in
-            guard let self = self else { return }
-            self.currentState.addMark(at: position)
-            if self.currentState.isCompleted {
-                self.counterMove += 1
-                self.goToNextState()
-            }
-        }
+        self.onSelectPosition()
     }
     
     @IBAction func restartButtonTapped(_ sender: UIButton) {
         self.gameboard.clear()
         self.gameboardView.clear()
         self.goToFirstState()
+        self.counterMove = 0
     }
     
     private func goToFirstState() {
@@ -54,6 +51,22 @@ class GameViewController: UIViewController {
                                              gameViewController: self,
                                              gameboard: gameboard,
                                              gameboardView: gameboardView)
+    }
+    
+    private func onSelectPosition() {
+        gameboardView.onSelectPosition = { [weak self] position in
+            guard let self = self else { return }
+            let setRandomPosition = GameboardPosition(column: Int.random(in: 0..<GameboardSize.columns),
+                                                row: Int.random(in: 0..<GameboardSize.rows))
+            
+            print("position \(position) \(self.gameMode) \(self.player) \(setRandomPosition)")
+            self.currentState.addMark(at: position)
+            if self.currentState.isCompleted {
+                self.counterMove += 1
+                print("counterMove \(self.counterMove)")
+                self.goToNextState()
+            }
+        }
     }
 
     private func goToNextState() {
@@ -68,14 +81,27 @@ class GameViewController: UIViewController {
         }
         
         if let playerInputState = currentState as? PlayerInputState {
-            let player = playerInputState.player.next
-            self.currentState = PlayerInputState(player: playerInputState.player.next,
+            self.player = gameMode == .twoPlayer ? playerInputState.player.next : playerInputState.player.nextOne
+            self.currentState = PlayerInputState(player: player,
                                                  markViewPrototype: player.markViewPrototype,
                                                  gameViewController: self,
                                                  gameboard: gameboard,
                                                  gameboardView: gameboardView)
         }
+        
+        if self.player == .pc {
+            print("player PC")
+            
+            while !self.currentState.isCompleted {
+                let setRandomPosition = GameboardPosition(column: Int.random(in: 0..<GameboardSize.columns), row: Int.random(in: 0..<GameboardSize.rows))
+                print("position \(setRandomPosition) \(self.gameMode) \(self.player)")
+                self.currentState.addMark(at: setRandomPosition)
+            }
+            self.counterMove += 1
+            self.goToNextState()
+        }
     }
+    
 
 }
 

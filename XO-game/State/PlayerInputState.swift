@@ -35,6 +35,9 @@ public class PlayerInputState: GameState {
         case .second:
             self.gameViewController?.firstPlayerTurnLabel.isHidden = true
             self.gameViewController?.secondPlayerTurnLabel.isHidden = false
+        case .pc:
+            self.gameViewController?.firstPlayerTurnLabel.isHidden = true
+            self.gameViewController?.secondPlayerTurnLabel.isHidden = false
         }
         self.gameViewController?.winnerLabel.isHidden = true
     }

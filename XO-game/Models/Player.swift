@@ -11,10 +11,20 @@ import Foundation
 public enum Player: CaseIterable {
     case first
     case second
+    case pc
     
     var next: Player {
         switch self {
         case .first: return .second
+        case .second: return .first
+        case .pc: return .first
+        }
+    }
+    
+    var nextOne: Player {
+        switch self {
+        case .first: return .pc
+        case .pc: return .first
         case .second: return .first
         }
     }
@@ -23,6 +33,7 @@ public enum Player: CaseIterable {
         switch self {
         case .first: return XView()
         case .second: return OView()
+        case .pc: return OView()
         }
     }
 }

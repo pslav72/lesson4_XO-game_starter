@@ -37,6 +37,7 @@ public class GameEndedState: GameState {
         switch winner {
         case .first: return "1st player"
         case .second: return "2nd player"
+        case .pc: return "PC player"
         }
     }
 }
