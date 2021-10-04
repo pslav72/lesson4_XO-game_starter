@@ -27,6 +27,8 @@ class BeginGameViewController: UIViewController {
             vc.gameMode = .twoPlayer
         case "onePlayerSegue":
             vc.gameMode = .onePlayer
+        case "fewTurn":
+            vc.gameMode = .fewTurn
         case .none:
             vc.gameMode = .twoPlayer
         case .some(_):

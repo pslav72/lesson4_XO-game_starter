@@ -33,6 +33,8 @@ public class GameEndedState: GameState {
     
     public func addMark(at position: GameboardPosition) { }
     
+    public func addMarkArray(at position: GameboardPosition) { }
+    
     private func winnerName(from winner: Player) -> String {
         switch winner {
         case .first: return "1st player"

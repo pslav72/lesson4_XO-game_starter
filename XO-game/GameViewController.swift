@@ -22,6 +22,8 @@ class GameViewController: UIViewController {
     var gameMode: GameMode = .twoPlayer
     private var player: Player = .first
     
+    private let turnInvokeCommand = TurnInvokeCommand()
+    
     private var currentState: GameState! {
         didSet {
             self.currentState.begin()
@@ -32,9 +34,13 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        secondPlayerTurnLabel.text = gameMode == .twoPlayer ? "2nd player" : "PC player"
         self.goToFirstState()
-        self.onSelectPosition()
+        if gameMode == .fewTurn {
+            fewTurnOnSelectPosition()
+        } else {
+            secondPlayerTurnLabel.text = gameMode == .fewTurn ? "PC player" : "2nd player"
+            self.onSelectPosition()
+        }
     }
     
     @IBAction func restartButtonTapped(_ sender: UIButton) {
@@ -42,6 +48,8 @@ class GameViewController: UIViewController {
         self.gameboardView.clear()
         self.goToFirstState()
         self.counterMove = 0
+        TurnInvokeCommand.shared.clear()
+        
     }
     
     private func goToFirstState() {
@@ -94,6 +102,23 @@ class GameViewController: UIViewController {
         }
     }
     
+    private func goToNextStateArray() {
+        
+        if counterMove >= 10 {
+            currentState = GameEndedState(winner: nil, gameViewController: self)
+            return
+        }
+        
+        if let playerInputState = currentState as? PlayerInputState {
+            self.player = gameMode == .onePlayer ? playerInputState.player.nextOne : playerInputState.player.next
+            self.currentState = PlayerInputState(player: player,
+                                                 markViewPrototype: player.markViewPrototype,
+                                                 gameViewController: self,
+                                                 gameboard: gameboard,
+                                                 gameboardView: gameboardView)
+        }
+    }
+    
     private func turnPlayerPC() {
         print("player PC")
         
@@ -104,6 +129,18 @@ class GameViewController: UIViewController {
         }
         self.counterMove += 1
         self.goToNextState()
+    }
+    
+    private func fewTurnOnSelectPosition() {
+        gameboardView.onSelectPosition = { [weak self] position in
+            guard let self = self else { return }
+            print(position)
+//            TurnInvokeCommand.shared.addTurnCommand(TurnActionCommand(player: self.player, position: position))
+            TurnInvokeCommand.shared.addTurnCommand(TurnActionCommand(player: PlayerInputState(player: self.player, markViewPrototype: self.player.markViewPrototype, gameViewController: self, gameboard: self.gameboard, gameboardView: self.gameboardView), position: position))
+            self.counterMove += 1
+            if self.counterMove == 5 { self.goToNextStateArray() }
+            if self.counterMove == 10 { self.goToNextStateArray() }
+        }
     }
     
 

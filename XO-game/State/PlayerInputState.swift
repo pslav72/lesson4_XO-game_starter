@@ -9,7 +9,7 @@
 import Foundation
 
 public class PlayerInputState: GameState {
-    
+
     public private(set) var isCompleted = false
     
     public let player: Player
@@ -59,5 +59,14 @@ public class PlayerInputState: GameState {
         self.gameboard?.setPlayer(self.player, at: position)
         self.gameboardView?.placeMarkView(self.markViewPrototype.copy(), at: position)
         self.isCompleted = true
+    }
+    
+    public func addMarkArray(at position: GameboardPosition) {
+        Log(.playerInput(player: self.player, position: position))
+        self.gameboard?.setPlayer(self.player, at: position)
+        self.gameboardView?.removeMarkView(at: position)
+        self.gameboardView?.placeMarkView(self.markViewPrototype.copy(), at: position)
+        self.isCompleted = true
+        
     }
 }

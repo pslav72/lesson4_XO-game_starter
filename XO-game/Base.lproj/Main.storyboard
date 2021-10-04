@@ -35,11 +35,21 @@
                                     <segue destination="BYZ-38-t0r" kind="presentation" identifier="onePlayerSegue" id="cEl-PZ-Erw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3z9-KR-MhH">
+                                <rect key="frame" x="95" y="271" width="185.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Игра в несколько ходов"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="fewTurn" id="jxz-L3-4c3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DPZ-gQ-klV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="LNU-S3-o6B" firstAttribute="centerX" secondItem="VPb-YI-8Td" secondAttribute="centerX" id="5nt-cR-KIK"/>
+                            <constraint firstItem="3z9-KR-MhH" firstAttribute="top" secondItem="LNU-S3-o6B" secondAttribute="bottom" constant="29" id="Eeg-14-ZQU"/>
+                            <constraint firstItem="3z9-KR-MhH" firstAttribute="centerX" secondItem="VPb-YI-8Td" secondAttribute="centerX" id="KOv-j9-3nV"/>
                             <constraint firstItem="VGL-Ml-f2f" firstAttribute="top" secondItem="DPZ-gQ-klV" secondAttribute="top" constant="150" id="LJs-SW-xSq"/>
                             <constraint firstItem="VGL-Ml-f2f" firstAttribute="centerX" secondItem="VPb-YI-8Td" secondAttribute="centerX" id="UKB-gR-1I7"/>
                             <constraint firstItem="LNU-S3-o6B" firstAttribute="top" secondItem="VGL-Ml-f2f" secondAttribute="bottom" constant="30" id="jpI-65-XcD"/>
@@ -135,7 +145,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cEl-PZ-Erw"/>
+        <segue reference="jxz-L3-4c3"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

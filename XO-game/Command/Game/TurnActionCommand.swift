@@ -1,5 +1,5 @@
 //
-//  GameMode.swift
+//  TurnActionCommand.swift
 //  XO-game
 //
 //  Created by Вячеслав Поляков on 03.10.2021.
@@ -8,8 +8,11 @@
 
 import Foundation
 
-enum GameMode {
-    case onePlayer
-    case twoPlayer
-    case fewTurn
+
+public struct TurnActionCommand {
+
+    var player: PlayerInputState
+    var position: GameboardPosition
+    
 }
+
