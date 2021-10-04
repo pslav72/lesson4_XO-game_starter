@@ -32,8 +32,10 @@ public final class Referee {
     // MARK: - Public
     
     public func determineWinner() -> Player? {
+        print("determineWinner")
         for player in Player.allCases {
             if doesPlayerHaveWinningCombination(player) {
+                print("determineWinner \(player)")
                 return player
             }
         }
